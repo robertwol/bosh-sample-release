@@ -1,0 +1,5 @@
+check process wordpress
+  with pidfile /var/run/stub.pid
+  start program "/bin/cp /var/run/monit.pid /var/run/stub.pid" with timeout 60 seconds
+  stop program "/bin/rm -f /var/run/stub.pid" with timeout 60 seconds
+  group vcap

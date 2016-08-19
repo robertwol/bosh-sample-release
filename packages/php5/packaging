@@ -1,0 +1,24 @@
+# abort script on any command that exits with a non zero value
+set -e
+
+echo "Extracting php5..."
+tar xjf php5/php-5.3.27.tar.bz2
+
+# ./configure needs the location of the apache and mysql packages
+export APACHE2=/var/vcap/packages/apache2
+
+echo "Building php5..."
+cd php-5.3.27
+  ./configure \
+  --prefix=${BOSH_INSTALL_TARGET} \
+  --with-apxs2=${APACHE2}/bin/apxs \
+  --with-config-file-path=/var/vcap/jobs/wordpress/config/php.ini \
+  --with-mysql=/var/vcap/packages/mysqlclient
+
+#stdout from make is redirected to /dev/null because the output is too large for the nats message bus
+make > /dev/null
+make install > /dev/null
+
+#finally, make installs into the apache module directory, we have to manually copy it back into BOSH_INSTALL_TARGET otherwise it will be left behind on the compilation vm
+mkdir -p ${BOSH_INSTALL_TARGET}/modules
+cp ${APACHE2}/modules/libphp5.so ${BOSH_INSTALL_TARGET}/modules

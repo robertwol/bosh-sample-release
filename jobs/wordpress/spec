@@ -1,0 +1,29 @@
+---
+name: wordpress
+
+templates:
+  httpd.conf.erb:     config/httpd.conf
+
+packages:
+  - mysqlclient
+  - apache2
+  - php5
+  - wordpress
+
+properties:
+  wordpress.auth_key:
+    description: Wordpress Authentication Unique Keys (AUTH_KEY)
+  wordpress.secure_auth_key:
+    description: Wordpress Authentication Unique Keys (SECURE_AUTH_KEY)
+  wordpress.logged_in_key:
+    description: Wordpress Authentication Unique Keys (LOGGED_IN_KEY)
+  wordpress.nonce_key:
+    description: Wordpress Authentication Unique Keys (NONCE_KEY)
+  wordpress.auth_salt:
+    description: Wordpress Authentication Unique Salts (AUTH_SALT)
+  wordpress.secure_auth_salt:
+    description: Wordpress Authentication Unique Salts (SECURE_AUTH_SALT)
+  wordpress.logged_in_salt:
+    description: Wordpress Authentication Unique Salts (LOGGED_IN_SALT)
+  wordpress.nonce_salt:
+    description: Wordpress Authentication Unique Salts (NONCE_SALT)
